@@ -18,20 +18,7 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         exit(0);
     }
     else if (position == ":t") {
-        int timeToEnd = timer.getTimeToEnd();
-        string timeToEndS = to_string(timeToEnd);
-
-        for (int i = 0; i < timeToEndS.length(); i += 2) {
-            if (i % 2 == 1) {
-                cout << timeToEndS[i];
-                i--;
-            }
-            else {
-                cout << timeToEndS[i] << timeToEndS[i + 1];
-            }
-        }
-
-        cout << endl;
+        cout << timer.getTimeToEndAsString() << endl;
         return takeInput(field, timer);
     }
 
@@ -60,7 +47,14 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
             y += iS;
         }
     }
-    input.position = stoi(x) * field.size + stoi(y);
+
+    try {
+        input.position = stoi(x) * field.size + stoi(y);
+    }
+    catch (const invalid_argument& e) {
+        cout << "Please enter valid command!" << endl;
+        return takeInput(field, timer);
+    }
 
     return input;
 }

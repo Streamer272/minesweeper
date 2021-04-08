@@ -10,5 +10,5 @@ private:
 public:
     explicit Timer(int minutes_);
     int getTimeFromStart() const;
-    int getTimeToEnd() const;
+    string getTimeToEndAsString() const;
 };
