@@ -8,7 +8,9 @@ class Field {
 private:
     vector<Block> field;
 public:
-    explicit Field(int size);
+    int size;
+
+    explicit Field(int size_);
     void Flag(int position);
     void Open(int position);
 };

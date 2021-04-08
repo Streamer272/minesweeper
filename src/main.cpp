@@ -3,15 +3,16 @@
 #include <unistd.h>
 #include "Field/Field.h"
 #include "Timer/Timer.h"
+#include "InputHandler/InputHandler.h"
 
 using namespace std;
 
 int getSizeAndMinutes(int &size, int &minutes) {
     string size_, minutes_;
     cout << "Please enter size (length) of the field you want to play on: ";
-    cin >> size;
+    cin >> size_;
     cout << "Please enter minutes you want to play: ";
-    cin >> minutes;
+    cin >> minutes_;
 
     try {
         stoi(size_);
@@ -34,15 +35,26 @@ int getSizeAndMinutes(int &size, int &minutes) {
     return 0;
 }
 
+void clear() {
+    system("cls");
+}
 
-int main() {
+[[noreturn]] int main() {
     int size, minutes;
     if (getSizeAndMinutes(size, minutes)) {
-        return 1;
+        exit(1);
     }
 
-    Timer timer;
+    Timer timer(minutes);
     Field field(size);
 
-    return 0;
+    string useless;
+    getline(cin, useless);
+
+    while (true) {
+        Input input = InputHandler::takeInput(field, timer);
+        cout << input.position << endl;
+        cout << input.flaged << endl;
+//        clear();
+    }
 }

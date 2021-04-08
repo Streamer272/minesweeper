@@ -3,10 +3,11 @@
 
 using namespace std;
 
-Field::Field(int size) {
-    for (int i = 0; i < size*size; i++) {
+Field::Field(int size_) {
+    for (int i = 0; i < size_*size_; i++) {
         this->field.emplace_back(TYPE_EMPTY, STATE_COVERED);
     }
+    this->size = size_;
 }
 
 void Field::Flag(int position) {
