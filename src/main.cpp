@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <unistd.h>
 #include "Field/Field.h"
 #include "Timer/Timer.h"
 #include "InputHandler/InputHandler.h"
@@ -42,6 +41,10 @@ void clear() {
 [[noreturn]] int main() {
     int size, minutes;
     if (getSizeAndMinutes(size, minutes)) {
+        exit(1);
+    }
+    if (minutes < 1 || size < 1) {
+        cout << "Please enter values higher than 0!" << endl;
         exit(1);
     }
 

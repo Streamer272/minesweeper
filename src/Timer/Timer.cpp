@@ -16,12 +16,12 @@ Timer::Timer(int minutes_) {
     this->minutes = minutes_;
 }
 
-int Timer::getTimeFromStart() const {
+string Timer::getTimeFromStart() const {
     time_t current_time;
     current_time = time(nullptr);
     tm *local_time = localtime(&current_time);
 
-    return (local_time->tm_hour - this->start_hour) * 10000 + (local_time->tm_min - this->start_min) * 100 + (local_time->tm_sec - this->start_sec);
+    return to_string(local_time->tm_hour - this->start_hour) + ":" + to_string(local_time->tm_min - this->start_min) + ":" + to_string(local_time->tm_sec - this->start_sec);
 }
 
 string Timer::getTimeToEndAsString() const {
@@ -32,12 +32,15 @@ string Timer::getTimeToEndAsString() const {
     int minutes_till_end = this->minutes - (local_time->tm_min - this->start_min);
     int seconds_till_end = 0;
 
-    // TODO: finish seconds implementation
-    if (this->start_sec <= local_time->tm_sec) {
-        seconds_till_end = 60 + this->start_sec - local_time->tm_sec;
+    if (this->start_sec > local_time->tm_sec) {
+        seconds_till_end = this->start_sec - local_time->tm_sec;
     }
-    else {
-        seconds_till_end = 60 + this->start_sec;
+    else if (this->start_sec == local_time->tm_sec) {
+        seconds_till_end = 0;
+    }
+    else if (this->start_sec < local_time->tm_sec) {
+        minutes_till_end--;
+        seconds_till_end = 60 - (local_time->tm_sec - this->start_sec);
     }
 
     return to_string(minutes_till_end) + ":" + to_string(seconds_till_end);
