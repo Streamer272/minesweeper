@@ -9,8 +9,8 @@
 
 class Block {
 public:
-    int type = 0;
-    int state = 0;
+    int type = TYPE_EMPTY;
+    int state = STATE_COVERED;
 
     explicit Block(int type_ = 0, int state_ = 0);
 };

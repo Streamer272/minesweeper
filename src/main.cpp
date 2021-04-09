@@ -56,11 +56,25 @@ int startGame() {
     string useless;
     getline(cin, useless);
 
+    field.draw();
+
+    Input firstInput = InputHandler::takeInput(field, timer);
+    field.initField(firstInput.position);
+
+    clear();
+
     while (running) {
         field.draw();
+
         Input input = InputHandler::takeInput(field, timer);
         field.click(input.position, input.flagged);
-//        clear();
+
+        if (timer.getTimeToEnd() < 1) {
+            cout << "Time expired!" << endl;
+            return 0;
+        }
+
+        clear();
     }
 
     return 0;
@@ -77,7 +91,7 @@ int startGame() {
         if (!autoplay) {
             do {
                 string command;
-                cout << "Game ended, write \":r\" to restart and \":e\" to exit. "; // NOLINT(modernize-raw-string-literal)
+                cout << "Game ended, write \":r\" to restart and \":e\" to exit: "; // NOLINT(modernize-raw-string-literal)
                 cin >> command;
 
                 if (command == ":e") {

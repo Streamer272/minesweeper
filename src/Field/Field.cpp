@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
 #include "Block.h"
 #include "CharMap.h"
 #include "Field.h"
@@ -82,6 +83,11 @@ int Field::getNumberOnNearbyBombs(int position) {
     return nearbyBombs;
 }
 
-void Field::initBombs(int start_position) {
+void Field::initField(int start_position) const {
     const int numberOfBombs = floor(this->size * this->size / 10);
+    int numberOfUncovered = floor(this->size * this->size / 10);
+    srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
+    numberOfUncovered += floor(this->size * this->size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
+
+    // TODO: actually use these numbers and init field
 }
