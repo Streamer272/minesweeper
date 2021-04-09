@@ -24,7 +24,7 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
     Input input; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
     if (position.find("f") != string::npos) {
-        input.flaged = true;
+        input.flagged = true;
     }
 
     string x, y;
@@ -61,7 +61,7 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
 void InputHandler::help() {
     cout << "You can enter position like this: \"x-y\" where x is vertical and y is diagonal. Field positions"
             " start at 1" << endl;
-    cout << "Enter \"f\" before position to apply flag on target, "
+    cout << "Enter \"f\" before position to apply flagged on target, "
             "like this: \"f x-y\"" << endl; // NOLINT(modernize-raw-string-literal)
     cout << "Enter \":t\" to get time you need to finish in" << endl;
     cout << "Enter \":e\" to quit game" << endl;

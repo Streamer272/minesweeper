@@ -38,26 +38,36 @@ void clear() {
     system("cls");
 }
 
-[[noreturn]] int main() {
+int startGame() {
     int size, minutes;
     if (getSizeAndMinutes(size, minutes)) {
-        exit(1);
+        return 1;
     }
     if (minutes < 1 || size < 1) {
         cout << "Please enter values higher than 0!" << endl;
-        exit(1);
+        return 1;
     }
 
+    bool running = true;
+
     Timer timer(minutes);
-    Field field(size);
+    Field field(size, &running);
 
     string useless;
     getline(cin, useless);
 
-    while (true) {
+    while (running) {
+        field.draw();
         Input input = InputHandler::takeInput(field, timer);
-        cout << input.position << endl;
-        cout << input.flaged << endl;
+        field.click(input.position, input.flagged);
 //        clear();
+    }
+
+    return 0;
+}
+
+[[noreturn]] int main() {
+    while (true) {
+        startGame();
     }
 }

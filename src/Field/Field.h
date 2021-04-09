@@ -7,10 +7,12 @@ using namespace std;
 class Field {
 private:
     vector<Block> field;
+    bool* running;
 public:
     int size;
 
-    explicit Field(int size_);
-    void Flag(int position);
-    void Open(int position);
+    explicit Field(int size_, bool* running_);
+    void click(int position, bool flagged);
+    void draw();
+    void endGame();
 };

@@ -32,6 +32,7 @@ string Timer::getTimeToEndAsString() const {
     int minutes_till_end = this->minutes - (local_time->tm_min - this->start_min);
     int seconds_till_end = 0;
 
+    // dont ask me how it works because i dont know either
     if (this->start_sec > local_time->tm_sec) {
         seconds_till_end = this->start_sec - local_time->tm_sec;
     }

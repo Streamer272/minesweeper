@@ -6,7 +6,7 @@ using namespace std;
 
 class Input {
 public:
-    bool flaged = false;
+    bool flagged = false;
     int position = 0;
 };
 

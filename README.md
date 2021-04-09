@@ -1,2 +1,2 @@
 # Minesweeper
-Just a normal minesweeper nothing to see here
+Console Minesweeper made in C++ for best performance and speed.
