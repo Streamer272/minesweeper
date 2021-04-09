@@ -15,4 +15,6 @@ public:
     void click(int position, bool flagged);
     void draw();
     void endGame();
+    void initBombs(int start_position);
+    int getNumberOnNearbyBombs(int position);
 };

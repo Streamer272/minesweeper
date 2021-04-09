@@ -67,7 +67,34 @@ int startGame() {
 }
 
 [[noreturn]] int main() {
+    bool autoplay = false;
+
     while (true) {
         startGame();
+
+        bool done = false;
+
+        if (!autoplay) {
+            do {
+                string command;
+                cout << "Game ended, write \":r\" to restart and \":e\" to exit. "; // NOLINT(modernize-raw-string-literal)
+                cin >> command;
+
+                if (command == ":e") {
+                    done = true;
+                    exit(0);
+                }
+                else if (command == ":r") {
+                    done = true;
+                }
+                else if (command == ":ar") {
+                    autoplay = true;
+                }
+                else {
+                    cout << "Please enter valid command!" << endl;
+                }
+            } while (!done);
+        }
+
     }
 }

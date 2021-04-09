@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Block.h"
 #include "CharMap.h"
 #include "Field.h"
@@ -31,8 +32,9 @@ void Field::draw() {
         for (int i = 0; i < this->size; i++) {
             Block block = this->field[i];
 
-            if (block.state == STATE_UNCOVERED) {
+            if (block.state == STATE_UNCOVERED && block.type != TYPE_BOMB) {
                 // TODO: add number displaying
+                cout << to_string(this->getNumberOnNearbyBombs(i));
             }
             else {
                 if (block.type == TYPE_BOMB) {
@@ -53,7 +55,33 @@ void Field::draw() {
 }
 
 void Field::endGame() {
-    cout << "You clicked on a bomb! You lost! Try again." << endl;
+    cout << "You lost! Try again." << endl;
     *running = false;
 }
 
+int Field::getNumberOnNearbyBombs(int position) {
+    int nearbyBombs = 0;
+
+    if (this->field[position - this->size - 1].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position - this->size].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position - this->size + 1].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position - 1].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position + 1].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position + this->size - 1].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position + this->size].type == TYPE_BOMB)
+        nearbyBombs++;
+    if (this->field[position + this->size + 1].type == TYPE_BOMB)
+        nearbyBombs++;
+
+    return nearbyBombs;
+}
+
+void Field::initBombs(int start_position) {
+    const int numberOfBombs = floor(this->size * this->size / 10);
+}
