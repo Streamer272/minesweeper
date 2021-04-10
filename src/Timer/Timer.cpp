@@ -25,12 +25,12 @@ int Timer::getTimeToEnd() const {
     int seconds_till_end = 0;
 
     // dont ask me how it works because i dont know either
-    if (start_sec > local_time->tm_sec) {
+    if (start_sec > local_time->tm_sec)
         seconds_till_end = start_sec - local_time->tm_sec;
-    }
-    else if (start_sec == local_time->tm_sec) {
+
+    else if (start_sec == local_time->tm_sec)
         seconds_till_end = 0;
-    }
+
     else if (start_sec < local_time->tm_sec) {
         minutes_till_end--;
         seconds_till_end = 60 - (local_time->tm_sec - start_sec);
@@ -48,12 +48,12 @@ string Timer::getTimeToEndAsString() const {
     int seconds_till_end = 0;
 
     // dont ask me how it works because i dont know either
-    if (start_sec > local_time->tm_sec) {
+    if (start_sec > local_time->tm_sec)
         seconds_till_end = start_sec - local_time->tm_sec;
-    }
-    else if (start_sec == local_time->tm_sec) {
+
+    else if (start_sec == local_time->tm_sec)
         seconds_till_end = 0;
-    }
+
     else if (start_sec < local_time->tm_sec) {
         minutes_till_end--;
         seconds_till_end = 60 - (local_time->tm_sec - start_sec);

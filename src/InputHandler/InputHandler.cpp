@@ -13,19 +13,18 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         help();
         return takeInput(field, timer);
     }
-    else if (position == ":e") {
+
+    else if (position == ":e")
         exit(0);
-    }
-    else if (position == ":t") {
+
+    else if (position == ":t")
         cout << timer.getTimeToEndAsString() << endl;
         return takeInput(field, timer);
-    }
 
     Input input; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
-    if (position.find("f") != string::npos) {
+    if (position.find("f") != string::npos)
         input.flagged = true;
-    }
 
     string x, y;
     bool after_dash = false;
@@ -35,16 +34,14 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         if (iS == " ") {}
         else if (iS == "f") {}
         else if (!after_dash) {
-            if (iS == "-") {
+            if (iS == "-")
                 after_dash = true;
-            }
-            else {
+
+            else
                 x += iS;
-            }
         }
-        else {
+        else
             y += iS;
-        }
     }
 
     try {

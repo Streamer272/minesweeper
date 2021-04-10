@@ -110,5 +110,3 @@ int startGame() {
 
     }
 }
-
-// TODO: change all IF statements to without brackets

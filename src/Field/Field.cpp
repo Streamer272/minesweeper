@@ -20,12 +20,11 @@ Field::Field(int size_, bool* running_) {
 void Field::click(int position, bool flagged) {
     cout << "field clock triggered" << endl;
 
-    if (flagged) {
+    if (flagged)
         field[position].state = STATE_FLAGGED;
-    }
-    else {
+
+    else
         field[position].state = STATE_UNCOVERED;
-    }
 }
 
 void Field::draw() {
@@ -33,31 +32,27 @@ void Field::draw() {
 
     int index = 0;
     for (auto block : field) {
-//        cout << block.state << ":" << block.type;
-
         if (block.state == STATE_UNCOVERED) {
-            if (block.type == TYPE_EMPTY) {
+            if (block.type == TYPE_EMPTY)
                     cout << to_string(getNumberOnNearbyBombs(index));
-            }
+
             else if (block.type == TYPE_BOMB) {
                 cout << CHAR_BOMB;
                 endGameProtocol = true;
             }
         }
-        else if (block.state == STATE_FLAGGED) {
+        else if (block.state == STATE_FLAGGED)
             cout << CHAR_FLAGGED;
-        }
-        else if (block.state == STATE_COVERED) {
+
+        else if (block.state == STATE_COVERED)
             cout << CHAR_COVERED;
-        }
 
         cout << " ";
 
         index++;
 
-        if (index % size == 0 && index != 0) {
+        if (index % size == 0 && index != 0)
             cout << endl;
-        }
     }
 
     cout << index << endl;
