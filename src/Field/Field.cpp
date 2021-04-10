@@ -9,49 +9,61 @@ using namespace std;
 
 Field::Field(int size_, bool* running_) {
     for (int i = 0; i < size_*size_; i++) {
-        this->field.emplace_back(TYPE_EMPTY, STATE_COVERED);
+        const Block block;
+        field.push_back(block);
     }
 
-    this->size = size_;
-    this->running = running_;
+    size = size_;
+    running = running_;
 }
 
 void Field::click(int position, bool flagged) {
+    cout << "field clock triggered" << endl;
+
     if (flagged) {
-        this->field[position].state = STATE_FLAGGED;
+        field[position].state = STATE_FLAGGED;
     }
     else {
-        this->field[position].state = STATE_UNCOVERED;
+        field[position].state = STATE_UNCOVERED;
     }
 }
 
 void Field::draw() {
-    CharMap charMap;
     bool endGameProtocol = false;
 
-    for (int x = 0; x < this->size; x++) {
-        for (int i = 0; i < this->size; i++) {
-            Block block = this->field[i];
+    int index = 0;
+    for (auto block : field) {
+//        cout << block.state << ":" << block.type;
 
-            if (block.state == STATE_UNCOVERED && block.type != TYPE_BOMB) {
-                // TODO: add number displaying
-                cout << to_string(this->getNumberOnNearbyBombs(i));
+        if (block.state == STATE_UNCOVERED) {
+            if (block.type == TYPE_EMPTY) {
+                    cout << to_string(getNumberOnNearbyBombs(index));
             }
-            else {
-                if (block.type == TYPE_BOMB) {
-                    endGameProtocol = true;
-                }
-
-                cout << charMap.getStringByState(block.state);
+            else if (block.type == TYPE_BOMB) {
+                cout << CHAR_BOMB;
+                endGameProtocol = true;
             }
-
-            cout << " ";
         }
-        cout << endl;
+        else if (block.state == STATE_FLAGGED) {
+            cout << CHAR_FLAGGED;
+        }
+        else if (block.state == STATE_COVERED) {
+            cout << CHAR_COVERED;
+        }
+
+        cout << " ";
+
+        index++;
+
+        if (index % size == 0 && index != 0) {
+            cout << endl;
+        }
     }
 
+    cout << index << endl;
+
     if (endGameProtocol) {
-        this->endGame();
+        endGame();
     }
 }
 
@@ -63,31 +75,31 @@ void Field::endGame() {
 int Field::getNumberOnNearbyBombs(int position) {
     int nearbyBombs = 0;
 
-    if (this->field[position - this->size - 1].type == TYPE_BOMB)
+    if (field[position - size - 1].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position - this->size].type == TYPE_BOMB)
+    if (field[position - size].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position - this->size + 1].type == TYPE_BOMB)
+    if (field[position - size + 1].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position - 1].type == TYPE_BOMB)
+    if (field[position - 1].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position + 1].type == TYPE_BOMB)
+    if (field[position + 1].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position + this->size - 1].type == TYPE_BOMB)
+    if (field[position + size - 1].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position + this->size].type == TYPE_BOMB)
+    if (field[position + size].type == TYPE_BOMB)
         nearbyBombs++;
-    if (this->field[position + this->size + 1].type == TYPE_BOMB)
+    if (field[position + size + 1].type == TYPE_BOMB)
         nearbyBombs++;
 
     return nearbyBombs;
 }
 
 void Field::initField(int start_position) const {
-    const int numberOfBombs = floor(this->size * this->size / 10);
-    int numberOfUncovered = floor(this->size * this->size / 10);
+    const int numberOfBombs = floor(size * size / 10);
+    int numberOfUncovered = floor(size * size / 10);
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
-    numberOfUncovered += floor(this->size * this->size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
+    numberOfUncovered += floor(size * size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
 
     // TODO: actually use these numbers and init field
 }

@@ -6,7 +6,7 @@ using namespace std;
 
 class Field {
 private:
-    vector<Block> field;
+    vector<Block> field = {};
     bool* running;
 public:
     int size;

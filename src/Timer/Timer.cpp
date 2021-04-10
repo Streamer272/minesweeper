@@ -9,11 +9,11 @@ Timer::Timer(int minutes_) {
     current_time = time(nullptr);
     tm *local_time = localtime(&current_time);
 
-    this->start_hour = local_time->tm_hour;
-    this->start_min = local_time->tm_min;
-    this->start_sec = local_time->tm_sec;
+    start_hour = local_time->tm_hour;
+    start_min = local_time->tm_min;
+    start_sec = local_time->tm_sec;
 
-    this->minutes = minutes_;
+    minutes = minutes_;
 }
 
 int Timer::getTimeToEnd() const {
@@ -21,19 +21,19 @@ int Timer::getTimeToEnd() const {
     current_time = time(nullptr);
     tm *local_time = localtime(&current_time);
 
-    int minutes_till_end = this->minutes - (local_time->tm_min - this->start_min);
+    int minutes_till_end = minutes - (local_time->tm_min - start_min);
     int seconds_till_end = 0;
 
     // dont ask me how it works because i dont know either
-    if (this->start_sec > local_time->tm_sec) {
-        seconds_till_end = this->start_sec - local_time->tm_sec;
+    if (start_sec > local_time->tm_sec) {
+        seconds_till_end = start_sec - local_time->tm_sec;
     }
-    else if (this->start_sec == local_time->tm_sec) {
+    else if (start_sec == local_time->tm_sec) {
         seconds_till_end = 0;
     }
-    else if (this->start_sec < local_time->tm_sec) {
+    else if (start_sec < local_time->tm_sec) {
         minutes_till_end--;
-        seconds_till_end = 60 - (local_time->tm_sec - this->start_sec);
+        seconds_till_end = 60 - (local_time->tm_sec - start_sec);
     }
 
     return minutes_till_end * 100 + seconds_till_end;
@@ -44,19 +44,19 @@ string Timer::getTimeToEndAsString() const {
     current_time = time(nullptr);
     tm *local_time = localtime(&current_time);
 
-    int minutes_till_end = this->minutes - (local_time->tm_min - this->start_min);
+    int minutes_till_end = minutes - (local_time->tm_min - start_min);
     int seconds_till_end = 0;
 
     // dont ask me how it works because i dont know either
-    if (this->start_sec > local_time->tm_sec) {
-        seconds_till_end = this->start_sec - local_time->tm_sec;
+    if (start_sec > local_time->tm_sec) {
+        seconds_till_end = start_sec - local_time->tm_sec;
     }
-    else if (this->start_sec == local_time->tm_sec) {
+    else if (start_sec == local_time->tm_sec) {
         seconds_till_end = 0;
     }
-    else if (this->start_sec < local_time->tm_sec) {
+    else if (start_sec < local_time->tm_sec) {
         minutes_till_end--;
-        seconds_till_end = 60 - (local_time->tm_sec - this->start_sec);
+        seconds_till_end = 60 - (local_time->tm_sec - start_sec);
     }
 
     return to_string(minutes_till_end) + ":" + to_string(seconds_till_end);

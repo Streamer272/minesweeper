@@ -48,7 +48,12 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
     }
 
     try {
-        input.position = stoi(x) * field.size + stoi(y);
+        input.position = (stoi(x) - 1) * field.size + (stoi(y) - 1);
+
+        if (stoi(x) - 1 < 0)
+            throw invalid_argument("");
+        if (stoi(y) - 1 < 0)
+            throw invalid_argument("");
     }
     catch (const invalid_argument& e) {
         cout << "Please enter valid command!" << endl;

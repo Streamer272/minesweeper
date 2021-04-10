@@ -35,14 +35,14 @@ int getSizeAndMinutes(int &size, int &minutes) {
 }
 
 void clear() {
-    system("cls");
+//    system("cls");
 }
 
 int startGame() {
     int size, minutes;
-    if (getSizeAndMinutes(size, minutes)) {
+    if (getSizeAndMinutes(size, minutes))
         return 1;
-    }
+
     if (minutes < 1 || size < 1) {
         cout << "Please enter values higher than 0!" << endl;
         return 1;
@@ -94,21 +94,21 @@ int startGame() {
                 cout << "Game ended, write \":r\" to restart and \":e\" to exit: "; // NOLINT(modernize-raw-string-literal)
                 cin >> command;
 
-                if (command == ":e") {
-                    done = true;
+                if (command == ":e")
                     exit(0);
-                }
-                else if (command == ":r") {
+
+                else if (command == ":r")
                     done = true;
-                }
-                else if (command == ":ar") {
+
+                else if (command == ":ar")
                     autoplay = true;
-                }
-                else {
+
+                else
                     cout << "Please enter valid command!" << endl;
-                }
             } while (!done);
         }
 
     }
 }
+
+// TODO: change all IF statements to without brackets
