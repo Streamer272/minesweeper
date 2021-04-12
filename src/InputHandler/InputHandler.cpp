@@ -14,17 +14,22 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         return takeInput(field, timer);
     }
 
-    else if (position == ":e")
+    else if (position == ":e") {
         exit(0);
+    }
 
-    else if (position == ":t")
+    else if (position == ":t") {
         cout << timer.getTimeToEndAsString() << endl;
         return takeInput(field, timer);
+    }
+
+    cout << "going into unreachable..." << endl;
 
     Input input; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
-    if (position.find("f") != string::npos)
+    if (position.find("f") != string::npos) {
         input.flagged = true;
+    }
 
     string x, y;
     bool after_dash = false;
@@ -34,11 +39,13 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         if (iS == " ") {}
         else if (iS == "f") {}
         else if (!after_dash) {
-            if (iS == "-")
+            if (iS == "-") {
                 after_dash = true;
+            }
 
-            else
+            else {
                 x += iS;
+            }
         }
         else
             y += iS;
@@ -47,10 +54,13 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
     try {
         input.position = (stoi(x) - 1) * field.size + (stoi(y) - 1);
 
-        if (stoi(x) - 1 < 0)
+        if (stoi(x) - 1 < 0) {
             throw invalid_argument("");
-        if (stoi(y) - 1 < 0)
+        }
+
+        if (stoi(y) - 1 < 0) {
             throw invalid_argument("");
+        }
     }
     catch (const invalid_argument& e) {
         cout << "Please enter valid command!" << endl;

@@ -20,42 +20,48 @@ Field::Field(int size_, bool* running_) {
 void Field::click(int position, bool flagged) {
     cout << "field clock triggered" << endl;
 
-    if (flagged)
+    if (flagged) {
         field[position].state = STATE_FLAGGED;
+    }
 
-    else
+    else {
         field[position].state = STATE_UNCOVERED;
+    }
 }
 
 void Field::draw() {
+    cout << "drawing" << endl;
+
     bool endGameProtocol = false;
 
     int index = 0;
     for (auto block : field) {
         if (block.state == STATE_UNCOVERED) {
-            if (block.type == TYPE_EMPTY)
-                    cout << to_string(getNumberOnNearbyBombs(index));
+            if (block.type == TYPE_EMPTY) {
+                cout << to_string(getNumberOnNearbyBombs(index));
+            }
 
             else if (block.type == TYPE_BOMB) {
                 cout << CHAR_BOMB;
                 endGameProtocol = true;
             }
         }
-        else if (block.state == STATE_FLAGGED)
+        else if (block.state == STATE_FLAGGED) {
             cout << CHAR_FLAGGED;
+        }
 
-        else if (block.state == STATE_COVERED)
+        else if (block.state == STATE_COVERED) {
             cout << CHAR_COVERED;
+        }
 
         cout << " ";
 
         index++;
 
-        if (index % size == 0 && index != 0)
+        if (index % size == 0 && index != 0) {
             cout << endl;
+        }
     }
-
-    cout << index << endl;
 
     if (endGameProtocol) {
         endGame();
@@ -70,33 +76,45 @@ void Field::endGame() {
 int Field::getNumberOnNearbyBombs(int position) {
     int nearbyBombs = 0;
 
-    if (field[position - size - 1].type == TYPE_BOMB)
+    if (field[position - size - 1].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position - size].type == TYPE_BOMB)
+    }
+    if (field[position - size].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position - size + 1].type == TYPE_BOMB)
+    }
+    if (field[position - size + 1].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position - 1].type == TYPE_BOMB)
+    }
+    if (field[position - 1].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position + 1].type == TYPE_BOMB)
+    }
+    if (field[position + 1].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position + size - 1].type == TYPE_BOMB)
+    }
+    if (field[position + size - 1].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position + size].type == TYPE_BOMB)
+    }
+    if (field[position + size].type == TYPE_BOMB) {
         nearbyBombs++;
-    if (field[position + size + 1].type == TYPE_BOMB)
+    }
+    if (field[position + size + 1].type == TYPE_BOMB) {
         nearbyBombs++;
+    }
 
     return nearbyBombs;
 }
 
-void Field::initField(int start_position) const {
+void Field::initField(int startPosition) const {
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
     int numberOfUncovered = floor(size * size / 10);
     numberOfUncovered += floor(size * size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
     const int numberOfBombs = floor(size * size / 10);
 
-    // TODO: init empty field
+    int lastUncoverPosition = getRandomPosAroundPos(startPosition);
+    for (int i = 0; i < numberOfUncovered; i++) {
+        field[lastUncoverPosition].state = STATE_UNCOVERED;
+        lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
+    }
 
     for (int i = 0; i < numberOfBombs; i++) {
         while (true) {
@@ -122,4 +140,30 @@ bool Field::checkFullField() {
     }
 
     return true;
+}
+
+int Field::getRandomPosAroundPos(int position) const {
+    srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
+    const int randNum = floor(rand() * 7); // NOLINT(cert-msc50-cpp)
+
+    switch (randNum) {
+        case 0:
+            return position - size - 1;
+        case 1:
+            return position - size;
+        case 2:
+            return position - size + 1;
+        case 3:
+            return position - 1;
+        case 4:
+            return position + 1;
+        case 5:
+            return position + size - 1;
+        case 6:
+            return position + size;
+        case 7:
+            return position + size + 1;
+        default:
+            return 0;
+    }
 }

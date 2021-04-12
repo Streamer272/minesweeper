@@ -40,8 +40,9 @@ void clear() {
 
 int startGame() {
     int size, minutes;
-    if (getSizeAndMinutes(size, minutes))
+    if (getSizeAndMinutes(size, minutes)) {
         return 1;
+    }
 
     if (minutes < 1 || size < 1) {
         cout << "Please enter values higher than 0!" << endl;
@@ -79,13 +80,13 @@ int startGame() {
         Input input = InputHandler::takeInput(field, timer);
         field.click(input.position, input.flagged);
 
-        clear();
+//        clear();
     }
 
     return 0;
 }
 
-[[noreturn]] int main() {
+int main() {
     bool autoplay = false;
 
     while (true) {
@@ -99,17 +100,21 @@ int startGame() {
                 cout << "Game ended, write \":r\" to restart and \":e\" to exit: "; // NOLINT(modernize-raw-string-literal)
                 cin >> command;
 
-                if (command == ":e")
+                if (command == ":e") {
                     exit(0);
+                }
 
-                else if (command == ":r")
+                else if (command == ":r") {
                     done = true;
+                }
 
-                else if (command == ":ar")
+                else if (command == ":ar") {
                     autoplay = true;
+                }
 
-                else
+                else {
                     cout << "Please enter valid command!" << endl;
+                }
             } while (!done);
         }
     }

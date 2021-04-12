@@ -15,7 +15,8 @@ public:
     void click(int position, bool flagged);
     void draw();
     void endGame();
-    void initField(int start_position) const;
+    void initField(int startPosition) const;
     int getNumberOnNearbyBombs(int position);
     bool checkFullField();
+    int getRandomPosAroundPos(int position) const;
 };
