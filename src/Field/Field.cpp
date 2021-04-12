@@ -18,8 +18,6 @@ Field::Field(int size_, bool* running_) {
 }
 
 void Field::click(int position, bool flagged) {
-    cout << "field clock triggered" << endl;
-
     if (flagged) {
         field[position].state = STATE_FLAGGED;
     }
@@ -30,8 +28,6 @@ void Field::click(int position, bool flagged) {
 }
 
 void Field::draw() {
-    cout << "drawing" << endl;
-
     bool endGameProtocol = false;
 
     int index = 0;
@@ -76,6 +72,8 @@ void Field::endGame() {
 int Field::getNumberOnNearbyBombs(int position) {
     int nearbyBombs = 0;
 
+    // we can not use switch case here, because we want to check for every single one
+
     if (field[position - size - 1].type == TYPE_BOMB) {
         nearbyBombs++;
     }
@@ -105,24 +103,28 @@ int Field::getNumberOnNearbyBombs(int position) {
 }
 
 void Field::initField(int startPosition) const {
+    // TODO: fix this bullshit
+
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
     int numberOfUncovered = floor(size * size / 10);
-    numberOfUncovered += floor(size * size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
+    numberOfUncovered += floor(size * size * 0.25 * (rand() % (100 - (0 + 1)) + 0) / 100); // NOLINT(cert-msc50-cpp)
     const int numberOfBombs = floor(size * size / 10);
 
-    int lastUncoverPosition = getRandomPosAroundPos(startPosition);
+    int lastUncoverPosition = startPosition;
     for (int i = 0; i < numberOfUncovered; i++) {
         field[lastUncoverPosition].state = STATE_UNCOVERED;
         lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
     }
 
     for (int i = 0; i < numberOfBombs; i++) {
-        while (true) {
-            const int randomPos = floor(rand() * (size * size)); // NOLINT(cert-msc50-cpp)
+        bool generatingRandPos = true;
+
+        while (generatingRandPos) {
+            const int randomPos = floor(rand() % (size * size - 1)); // NOLINT(cert-msc50-cpp)
 
             if (field[randomPos].state == STATE_COVERED) {
                 field[randomPos].type = TYPE_BOMB;
-                break;
+                generatingRandPos = false;
             }
         }
     }

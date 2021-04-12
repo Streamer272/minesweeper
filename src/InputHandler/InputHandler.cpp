@@ -23,8 +23,6 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
         return takeInput(field, timer);
     }
 
-    cout << "going into unreachable..." << endl;
-
     Input input; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
     if (position.find("f") != string::npos) {
@@ -36,8 +34,7 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
     for (char i : position) {
         string iS(1, i);
 
-        if (iS == " ") {}
-        else if (iS == "f") {}
+        if (iS == " " || iS == "f") {} // NOLINT(bugprone-branch-clone)
         else if (!after_dash) {
             if (iS == "-") {
                 after_dash = true;
@@ -47,18 +44,19 @@ Input InputHandler::takeInput(const Field& field, Timer timer) {
                 x += iS;
             }
         }
-        else
+        else {
             y += iS;
+        }
     }
 
     try {
         input.position = (stoi(x) - 1) * field.size + (stoi(y) - 1);
 
-        if (stoi(x) - 1 < 0) {
+        if (stoi(x) - 1 < 0 || stoi(x) - 1 > field.size) {
             throw invalid_argument("");
         }
 
-        if (stoi(y) - 1 < 0) {
+        if (stoi(y) - 1 < 0 || stoi(y) - 1 > field.size) {
             throw invalid_argument("");
         }
     }

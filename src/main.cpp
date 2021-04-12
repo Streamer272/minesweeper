@@ -1,3 +1,11 @@
+/*
+ * author: Streamer272
+ * project start date: 8/04/2021
+ * project end date: --/--/----
+ * * comments are in source files
+ * */
+
+
 #include <iostream>
 #include <string>
 #include "Field/Field.h"
@@ -6,7 +14,11 @@
 
 using namespace std;
 
-int getSizeAndMinutes(int &size, int &minutes) {
+int getStartSizeAndMinutes(int &size, int &minutes) {
+    /*
+     * this function asks for start size and start minutes and returns them
+     * */
+
     string size_, minutes_;
     cout << "Please enter size (length) of the field you want to play on: ";
     cin >> size_;
@@ -35,12 +47,20 @@ int getSizeAndMinutes(int &size, int &minutes) {
 }
 
 void clear() {
+    /*
+     * this function clears windows console
+     * */
+
 //    system("cls");
 }
 
 int startGame() {
+    /*
+     * starts minesweeper game
+     * */
+
     int size, minutes;
-    if (getSizeAndMinutes(size, minutes)) {
+    if (getStartSizeAndMinutes(size, minutes)) {
         return 1;
     }
 
@@ -57,11 +77,15 @@ int startGame() {
     string useless;
     getline(cin, useless);
 
+    cout << "drawing field" << endl;
     field.draw();
 
+    cout << "taking input" << endl;
     Input firstInput = InputHandler::takeInput(field, timer);
+    cout << "initing field" << endl;
     field.initField(firstInput.position);
 
+    cout << "clearing" << endl;
     clear();
 
     while (running) {
@@ -87,6 +111,10 @@ int startGame() {
 }
 
 int main() {
+    /*
+     * runs whole code
+     * */
+
     bool autoplay = false;
 
     while (true) {
@@ -100,14 +128,17 @@ int main() {
                 cout << "Game ended, write \":r\" to restart and \":e\" to exit: "; // NOLINT(modernize-raw-string-literal)
                 cin >> command;
 
+                // exit
                 if (command == ":e") {
                     exit(0);
                 }
 
+                // restart
                 else if (command == ":r") {
                     done = true;
                 }
 
+                // auto restart
                 else if (command == ":ar") {
                     autoplay = true;
                 }
