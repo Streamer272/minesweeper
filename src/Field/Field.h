@@ -17,5 +17,5 @@ public:
     void endGame();
     void initField(int start_position) const;
     int getNumberOnNearbyBombs(int position);
-    // TODO: adds finish check
+    bool checkFullField();
 };

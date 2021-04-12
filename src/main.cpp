@@ -64,15 +64,20 @@ int startGame() {
     clear();
 
     while (running) {
-        field.draw();
-
-        Input input = InputHandler::takeInput(field, timer);
-        field.click(input.position, input.flagged);
+        if (field.checkFullField()) {
+            cout << "Congratulations, you won in time " << timer.getTimeFromStartAsString() << "!" << endl;
+            return 0;
+        }
 
         if (timer.getTimeToEnd() < 1) {
             cout << "Time expired!" << endl;
             return 0;
         }
+
+        field.draw();
+
+        Input input = InputHandler::takeInput(field, timer);
+        field.click(input.position, input.flagged);
 
         clear();
     }
@@ -107,6 +112,5 @@ int startGame() {
                     cout << "Please enter valid command!" << endl;
             } while (!done);
         }
-
     }
 }

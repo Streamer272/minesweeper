@@ -61,3 +61,12 @@ string Timer::getTimeToEndAsString() const {
 
     return to_string(minutes_till_end) + ":" + to_string(seconds_till_end);
 }
+
+string Timer::getTimeFromStartAsString() const {
+    time_t current_time;
+    current_time = time(nullptr);
+    tm *local_time = localtime(&current_time);
+
+    return to_string(local_time->tm_hour - start_hour) + ":" + to_string(local_time->tm_min - start_min) + ":" +
+            to_string(local_time->tm_sec - start_sec);
+}

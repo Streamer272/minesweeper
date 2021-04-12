@@ -9,8 +9,8 @@
 
 class Block {
 public:
-    int type = TYPE_EMPTY;
-    int state = STATE_COVERED;
+    mutable int type = TYPE_EMPTY;
+    mutable int state = STATE_COVERED;
 
     explicit Block(int type_ = 0, int state_ = 0);
 };

@@ -91,10 +91,35 @@ int Field::getNumberOnNearbyBombs(int position) {
 }
 
 void Field::initField(int start_position) const {
-    const int numberOfBombs = floor(size * size / 10);
-    int numberOfUncovered = floor(size * size / 10);
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
+    int numberOfUncovered = floor(size * size / 10);
     numberOfUncovered += floor(size * size * 0.25 * rand()); // NOLINT(cert-msc50-cpp)
+    const int numberOfBombs = floor(size * size / 10);
 
-    // TODO: actually use these numbers and init field
+    // TODO: init empty field
+
+    for (int i = 0; i < numberOfBombs; i++) {
+        while (true) {
+            const int randomPos = floor(rand() * (size * size)); // NOLINT(cert-msc50-cpp)
+
+            if (field[randomPos].state == STATE_COVERED) {
+                field[randomPos].type = TYPE_BOMB;
+                break;
+            }
+        }
+    }
+}
+
+bool Field::checkFullField() {
+    for (Block block : field) { // NOLINT(readability-use-anyofallof)
+        if (block.type == STATE_FLAGGED && block.type != TYPE_BOMB) {
+            return false;
+        }
+
+        if (block.state == STATE_COVERED) {
+            return false;
+        }
+    }
+
+    return true;
 }

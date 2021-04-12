@@ -9,6 +9,7 @@ private:
     int minutes;
 public:
     explicit Timer(int minutes_);
+    string getTimeFromStartAsString() const;
     string getTimeToEndAsString() const;
     int getTimeToEnd() const;
 };
