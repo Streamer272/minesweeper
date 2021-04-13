@@ -67,6 +67,8 @@ void Field::draw() {
 void Field::endGame() {
     cout << "You lost! Try again." << endl;
     *running = false;
+
+    // TODO: fix game this asks for last input
 }
 
 int Field::getNumberOnNearbyBombs(int position) {
@@ -103,8 +105,6 @@ int Field::getNumberOnNearbyBombs(int position) {
 }
 
 void Field::initField(int startPosition) const {
-    // TODO: fix this bullshit
-
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
     int numberOfUncovered = floor(size * size / 10);
     numberOfUncovered += floor(size * size * 0.25 * (rand() % (100 - (0 + 1)) + 0) / 100); // NOLINT(cert-msc50-cpp)
@@ -113,6 +113,9 @@ void Field::initField(int startPosition) const {
     int lastUncoverPosition = startPosition;
     for (int i = 0; i < numberOfUncovered; i++) {
         while (field[lastUncoverPosition].state == STATE_UNCOVERED) {
+            lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
+        }
+        while (lastUncoverPosition > 0 || lastUncoverPosition < size*size) {
             lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
         }
 
@@ -131,10 +134,6 @@ void Field::initField(int startPosition) const {
                 generatingRandPos = false;
             }
         }
-    }
-
-    for (Block block : field) {
-        cout << "type: " << block.type << ", state: " << block.state << endl;
     }
 }
 

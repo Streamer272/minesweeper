@@ -51,9 +51,8 @@ void clear() {
      * this function clears windows console
      * */
 
-    cout << "CLEAR" << endl;
-
-//    system("cls");
+    // TODO: make it compatible with linux and mac
+    system("cls");
 }
 
 int startGame() {
@@ -79,12 +78,9 @@ int startGame() {
     string useless;
     getline(cin, useless);
 
-    cout << "drawing field" << endl;
     field.draw();
 
-    cout << "taking input" << endl;
     Input firstInput = InputHandler::takeInput(field, timer);
-    cout << "initing field" << endl;
     field.initField(firstInput.position);
 
     clear();
