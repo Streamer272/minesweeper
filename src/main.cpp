@@ -12,6 +12,21 @@
 #include "Timer/Timer.h"
 #include "InputHandler/InputHandler.h"
 
+// os definition
+#if defined(_WIN32) or defined(_WIN64)
+#define OS "windows"
+#elif defined(__linux__)
+#define OS "linux"
+#elif defined(__APPLE__) or defined(__MACH__)
+#define OS "mac"
+#elif defined(__unix) or defined(__unix__)
+#define OS "unix"
+#elif defined(__FreeBDS__)
+#define OS "freebds"
+#else
+#define OS "unknown"
+#endif
+
 using namespace std;
 
 int getStartSizeAndMinutes(int &size, int &minutes) {
@@ -51,8 +66,21 @@ void clear() {
      * this function clears windows console
      * */
 
-    // TODO: make it compatible with linux and mac
-    system("cls");
+    if (OS == "linux") {
+        system("clear");
+    }
+    else if (OS == "windows") {
+        system("cls");
+    }
+    else if (OS == "unix") {
+        system("reset");
+    }
+    else if (OS == "mac") {
+        system("clear");
+    }
+    else if (OS == "freebds") {
+        system("clear");
+    }
 }
 
 int startGame() {
