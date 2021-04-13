@@ -60,6 +60,8 @@ int startGame() {
      * starts minesweeper game
      * */
 
+    // TODO: check if compatible with bigger fields
+
     int size, minutes;
     if (getStartSizeAndMinutes(size, minutes)) {
         return 1;
@@ -147,3 +149,5 @@ int main() {
         }
     }
 }
+
+// TODO: finish README.md

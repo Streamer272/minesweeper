@@ -5,6 +5,8 @@
 using namespace std;
 
 Input InputHandler::takeInput(const Field& field, Timer timer) {
+    // TODO: y position is bugged
+
     string position;
     cout << "Enter position or \":h\" for help: ";
     getline(cin, position);
