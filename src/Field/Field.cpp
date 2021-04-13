@@ -112,6 +112,10 @@ void Field::initField(int startPosition) const {
 
     int lastUncoverPosition = startPosition;
     for (int i = 0; i < numberOfUncovered; i++) {
+        while (field[lastUncoverPosition].state == STATE_UNCOVERED) {
+            lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
+        }
+
         field[lastUncoverPosition].state = STATE_UNCOVERED;
         lastUncoverPosition = getRandomPosAroundPos(lastUncoverPosition);
     }
@@ -127,6 +131,10 @@ void Field::initField(int startPosition) const {
                 generatingRandPos = false;
             }
         }
+    }
+
+    for (Block block : field) {
+        cout << "type: " << block.type << ", state: " << block.state << endl;
     }
 }
 
@@ -146,26 +154,33 @@ bool Field::checkFullField() {
 
 int Field::getRandomPosAroundPos(int position) const {
     srand(time(nullptr)); // NOLINT(cert-msc51-cpp)
-    const int randNum = floor(rand() * 7); // NOLINT(cert-msc50-cpp)
+    const int randNum = floor(rand() % 6); // NOLINT(cert-msc50-cpp)
 
-    switch (randNum) {
-        case 0:
-            return position - size - 1;
-        case 1:
-            return position - size;
-        case 2:
-            return position - size + 1;
-        case 3:
-            return position - 1;
-        case 4:
-            return position + 1;
-        case 5:
-            return position + size - 1;
-        case 6:
-            return position + size;
-        case 7:
-            return position + size + 1;
-        default:
-            return 0;
+    if (randNum == 0) {
+        return position - size - 1;
+    }
+    else if (randNum == 1) {
+        return position - size;
+    }
+    else if (randNum == 2) {
+        return position - size + 1;
+    }
+    else if (randNum == 3) {
+        return position - 1;
+    }
+    else if (randNum == 4) {
+        return position + 1;
+    }
+    else if (randNum == 5) {
+        return position + size - 1;
+    }
+    else if (randNum == 6) {
+        return position + size;
+    }
+    else if (randNum == 7) {
+        return position + size + 1;
+    }
+    else {
+        return 0;
     }
 }

@@ -51,6 +51,8 @@ void clear() {
      * this function clears windows console
      * */
 
+    cout << "CLEAR" << endl;
+
 //    system("cls");
 }
 
@@ -85,7 +87,6 @@ int startGame() {
     cout << "initing field" << endl;
     field.initField(firstInput.position);
 
-    cout << "clearing" << endl;
     clear();
 
     while (running) {
@@ -104,7 +105,7 @@ int startGame() {
         Input input = InputHandler::takeInput(field, timer);
         field.click(input.position, input.flagged);
 
-//        clear();
+        clear();
     }
 
     return 0;
