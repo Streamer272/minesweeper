@@ -68,7 +68,7 @@ void Field::endGame() {
     cout << "You lost! Try again." << endl;
     *running = false;
 
-    // TODO: fix game this asks for last input
+    // TODO: fix game asks for last input
 }
 
 int Field::getNumberOnNearbyBombs(int position) {
